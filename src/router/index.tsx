@@ -21,7 +21,7 @@ const router = createBrowserRouter([
         
     },
     {
-        path:'/mover-resizer-rotater',
+        path:'/open-source-template/mover-resizer-rotater',
         element:  (
             <Suspense  fallback={<div>Loading...</div>} >   
             <PageHeader title="mover-resizer-rotater">  <MoverResizerRotaterPage/> </PageHeader>
