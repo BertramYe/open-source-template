@@ -1,0 +1,162 @@
+.container {
+    padding: 0;
+    margin: 0;
+    text-align: center;
+}
+
+.title {
+    margin-top: 2%;
+    font-size: large;
+    font-weight: 700;
+}
+
+
+/* .descriptions {
+    height: 15px;
+    width: 300px;
+} */
+
+.descriptions p {
+    width: 80%;
+    margin: auto;
+}
+
+.showAreaContainer {
+    background-color: blanchedalmond;
+    padding-top: 3px;
+    padding-bottom: 20px;
+}
+
+.parentContainer {
+    width: 450px;
+    height: 450px;
+    margin-left: 42%;
+    background-color: aquamarine;
+    text-align: center;
+    font-size: 30px;
+    color: black;
+    margin-top: 30px;
+    box-shadow: 0px 0px 30px 3px #00bfff;
+    border-radius: 20px;
+}
+
+
+.targetContainer {
+    background-color: greenyellow;
+    font-size: 10px;
+    position: absolute;
+    font-weight: 800;
+    color: black;
+}
+
+.targetContainer span {
+    line-height: 100px;
+}
+
+.controllersContainer {
+    position: fixed;
+    width: 300px;
+    min-height: 400px;
+    background-color: var(--text-color);
+    top: 150px;
+    right: 1%;
+    text-align: center;
+    box-shadow: 0px 0px 30px 3px #00bfff;
+    border-radius: 10px;
+    color: black;
+}
+
+
+.controllersContainer h2 {
+    font-size: 25px;
+    font-weight: 800;
+    margin-top: 10px;
+}
+
+.scaledButtonContainer {
+    height: 30px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+.scalePercentValue {
+    outline: none;
+    color: black;
+    width: 80px;
+    text-align: center;
+    border: solid 1px black;
+}
+
+.increaseScaled,
+.decreaseScaled {
+    text-align: center;
+    box-shadow: 0px 0px 20px 3px var(--bg-color);
+    border: solid 1px black;
+    width: 90px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+
+.increaseScaled {
+    border-right: none;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.decreaseScaled {
+    border-left: none;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+
+.backToGitHub {
+    position: absolute;
+    height: 30px;
+    display: inline-flex;
+    bottom: 5px;
+    left: 30%;
+}
+
+.controllerTips {
+    text-align: left;
+    padding-left: 13px;
+    font-size: 15px;
+    font-weight: 800;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+
+.paramsButton {
+    margin-top: 5px;
+    border: solid 1px black;
+    width: 150px;
+    height: 30px;
+    border-radius: 10px;
+    background-color: var(--bg-color);
+    box-shadow: 0px 0px 20px 3px var(--bg-color);
+    color: var(--text-color);
+}
+
+.ScenarioTips {
+    height: 40px;
+    line-height: 40px;
+} 
+
+.ScenarioTips1,
+.ScenarioTips2 {
+    position: relative;
+    min-width: 100px;
+    color: black;
+    display: inline;
+}
+
+.ScenarioTips1 {
+    left: -27%;
+}
+
+.ScenarioTips2 {
+    right: 2%;
+}
