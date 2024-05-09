@@ -1,6 +1,6 @@
 import { 
-    // createBrowserRouter,
-    createHashRouter,
+    createBrowserRouter,
+    // createHashRouter,
       
 } from "react-router-dom";
 import HomePage from "@/pages/Home";
@@ -10,7 +10,7 @@ import PageHeader from "@/components/PageHeader";
 import { Suspense} from 'react'; // 延迟加载缓冲
 
 
-const router = createHashRouter([
+const router = createBrowserRouter([
     {
         path:'/open-source-template',
         element: (
