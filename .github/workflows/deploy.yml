@@ -12,12 +12,12 @@ jobs:
       - name: read contents of repos
         uses: actions/checkout@v4
 
-      - name: install dependencies && build
-        run: 
-          npm install
-          npm run build 
-          pwd
-          ls
+      - name: install dependencies 
+        run: npm install
+      - name: build
+        run: npm run build 
+      - name: check folders
+        run: pwd && ls
     
       # - name: deployment
       #   uses: JamesIves/github-pages-deploy-action@v4
