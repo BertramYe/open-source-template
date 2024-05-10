@@ -25,6 +25,8 @@ const TemplateDetailsPages = () => {
         }
     }
     const rounterParams = useParams()
+    console.log(rounterParams)
+
     let [ title, Element] = GetTargetValidTemplate(rounterParams.template_name)
     return (
         <>
