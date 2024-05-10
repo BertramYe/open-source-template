@@ -10,5 +10,5 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
-  base:'/open-source-template/'
+  // base:'/open-source-template/'
 })
