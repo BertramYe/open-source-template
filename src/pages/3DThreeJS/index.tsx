@@ -302,6 +302,7 @@ function exportSTL(target_Meshes_list:THREE.Mesh[], finalSTLName:string) {
         }
     }
     catch(error){
+        console.log(error)
         alert(`error to save stl files: error:${error}`)
     }
     return stl_saved; 
@@ -310,62 +311,48 @@ function exportSTL(target_Meshes_list:THREE.Mesh[], finalSTLName:string) {
 
 
 function MergeTargetMesh(TargetMeshesList:THREE.Mesh[], type:string) {
+    // type : brick, just return the brick mesh
+    // type : words, just merge the words mesh into a new mesh
+    // type : all , just merge all of the mesh, including the mesh and the brick
+    
     let mesh_geometry_list:THREE.BufferGeometry[] = []
-    var material_list:THREE.MeshStandardMaterial[] = []
+    var material_list:any[] = []
     // pick and transfer  the target into the matrixWorld
     TargetMeshesList.map((mesh)=>{
         switch (type){
             case 'words':
                 if(mesh.name != 'brick'){
                     let matrixWorldGeometry = mesh.geometry.clone().applyMatrix4(mesh.matrixWorld);
-                    mesh_geometry_list.push(matrixWorldGeometry);
+                    material_list.push(mesh.material)
+                    mesh_geometry_list.push(matrixWorldGeometry)
                 }
                 break;
             case 'brick':
                 if (mesh.name == 'brick') {
                     let matrixWorldGeometry = mesh.geometry.clone().applyMatrix4(mesh.matrixWorld);
-                    mesh_geometry_list.push(matrixWorldGeometry);
+                    material_list.push(mesh.material)
+                    mesh_geometry_list.push(matrixWorldGeometry)
                 }
                 break;
             default:  // 'all'
                 // tranfer all of the material as the standerd material
-                let mesh_material = mesh.material as THREE.MeshBasicMaterial
-
-                let materialcolor = new THREE.Color(mesh_material.color.r, mesh_material.color.g, mesh_material.color.b)
-                let new_material = new THREE.MeshStandardMaterial({
-                    color: materialcolor,
-                })
-                material_list.push(new_material)
                 let matrixWorldGeometry = mesh.geometry.clone().applyMatrix4(mesh.matrixWorld);
+                
+                // 在这一步也可自行创建对应的 material
+                material_list.push(mesh.material)
                 mesh_geometry_list.push(matrixWorldGeometry)
                 break;
         }
-            
     })
-    
-    // begin to merge
-    // type : brick, just return the brick mesh
-    // type : words, just merge the words mesh into a new mesh
-    // type : all , just merge all of the mesh, including the mesh and the brick
-    if (type === "brick") {
-        let mergedGeometry = mergeBufferGeometries.mergeGeometries(mesh_geometry_list, true);
-        // merge different words into one merge but without set any color or something
-        let mergedMesh = new THREE.Mesh(mergedGeometry, new THREE.MeshStandardMaterial());
-        return mergedMesh
-    } else if (type === "words") {
-        let mergedGeometry = mergeBufferGeometries.mergeGeometries(mesh_geometry_list, true);
-        // merge different words into one merge but without set any color or something
-        let mergedMesh = new THREE.Mesh(mergedGeometry, new THREE.MeshStandardMaterial());
-        return mergedMesh
-    } else {
-        let mergedGeometry = mergeBufferGeometries.mergeGeometries(mesh_geometry_list, true);
-        // mutiple materials can merged into one with the diferent materils and colos like below
-        // var mergedMesh = new THREE.Mesh(mergedGeometry, new THREE.MeshStandardMaterial());
-        let mergedMesh = new THREE.Mesh(mergedGeometry, material_list);
-        // console.log("mergedMesh",mergedMesh)
-        return mergedMesh
-    }
 
+
+    // begin to merge
+    let mergedGeometry = mergeBufferGeometries.mergeGeometries(mesh_geometry_list, true);
+    // mutiple materials can merged into one with the diferent materils and colos like below
+    // var mergedMesh = new THREE.Mesh(mergedGeometry, new THREE.MeshStandardMaterial());
+    let mergedMesh = new THREE.Mesh(mergedGeometry, material_list);
+    // console.log("mergedMesh",mergedMesh)
+    return mergedMesh
 }
 
 
@@ -377,6 +364,7 @@ const ThreeJS3DPage = () => {
     const guiContainerRef = useRef<HTMLDivElement | null>(null)
     const containerRef = useRef<HTMLDivElement | null>(null) 
     let [camera,scene,render]:InitialSceneType = InitialScene(width,height)
+    // const [[camera,scene,render],SetInitialSceneType] = useState<InitialSceneType>(InitialScene(width,height))
 
 
     const [inputChars,SetInputChars] = useState<string>('') 
@@ -384,6 +372,9 @@ const ThreeJS3DPage = () => {
     const [LoadedGeometriesDict,SetLoadedGeometriesDict] = useState<LoadedGeometriesDictType>({})
     const [availableDownload,SetAvaliableDownload] = useState<boolean>(false)
     
+    // 存储需要被导出的STL元素 
+    const sceneChildrenRef = useRef<THREE.Mesh[]>([])
+
 
     //  { autoPlace: false } 这个配置对象告诉 dat.GUI 不要自动创建 GUI 元素并将其添加到页面上，而是让我们手动控制 GUI 元素的放置。
     // 即，将 autoPlace 设置为 false 时，dat.GUI 不会自动将 GUI 面板添加到 document.body。
@@ -442,9 +433,9 @@ const ThreeJS3DPage = () => {
     //  做整个页面的重新渲染
     function RerenderScene(){
         // 先置空，后添加，将canvas对象添加到对应的场景中
-        camera.aspect = width / height;
+        // camera.aspect = width / height;
         camera.updateProjectionMatrix();
-        render.setSize(width, height);
+        // render.setSize(width, height);
         render.render(scene, camera); 
     }
 
@@ -483,6 +474,10 @@ const ThreeJS3DPage = () => {
         camera = reinit[0]
         scene = reinit[1]
         render = reinit[2]
+
+        // SetInitialSceneType([
+        //     ...InitialScene(width,height)
+        // ])
         
         // scene.children.map((child)=>{
         //     //  清除指定的除了环境光之外的元素，即所有的 mesh类的元素全部清除即可
@@ -490,21 +485,26 @@ const ThreeJS3DPage = () => {
         //         scene.remove(child)
         //     }
         // })
-        let targetMeshesList = GetTargetStlMeshes(inputChars,LoadedGeometriesDict)
+
+        // 即使是这么赋值,但是后续的gui的变化也会自动将当前 sceneChildrenRef 内的东西进行变化,不影响后续的导出
+        sceneChildrenRef.current = GetTargetStlMeshes(inputChars,LoadedGeometriesDict)
         //  除了 scene的add方法，还可以像下面这样进行添加
         scene.children = [
             ...scene.children,
-            ...targetMeshesList
+            ...sceneChildrenRef.current
         ]
+
         // for(let mesh of targetMeshesList){
         //     scene.add(mesh)
         // }
 
         //将以上的meshes添加到对应的 gui 面板上
-        AddGuiControlers(targetMeshesList)
+        AddGuiControlers(sceneChildrenRef.current)
 
         // 允许下载
-        SetAvaliableDownload(true)        
+        if(sceneChildrenRef.current.length > 0){
+            SetAvaliableDownload(true)        
+        }
         
         // 先置空，后添加，将canvas对象添加到对应的场景中
         containerRef.current?.appendChild(render.domElement)
@@ -512,23 +512,18 @@ const ThreeJS3DPage = () => {
         //  添加轨道使得能随意拖动场景
         const control = new OrbitControls(camera,render.domElement)
         control.addEventListener('change',RerenderScene)
-
+        
         RerenderScene()
     }
 
     function DownloadButtonClick(){
         let target_meshes:THREE.Mesh[] = []
-        scene.children.map((child)=>{
+        sceneChildrenRef.current.map((child)=>{
             if(child.type === 'Mesh'){
                 target_meshes.push(child as THREE.Mesh)
             }
         })
-        let saved =  exportSTL(target_meshes,inputChars)
-        if(!saved){
-            alert('download sucessfully!')
-        }else{
-            alert('download failed!')
-        }
+        exportSTL(target_meshes,inputChars)
     }
 
     return (<>
