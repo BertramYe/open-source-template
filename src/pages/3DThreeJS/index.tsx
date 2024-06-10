@@ -465,15 +465,15 @@ const ThreeJS3DPage = () => {
     },[])
 
 
-    useEffect(()=>{
-        //  添加到这里是因为每次我们输入input的内容时，总是会触发，整个页面的冲洗渲染，为了保持一致性，所以才会在这里添加初始化内容，这样会让每次input输入，都会激发InitialGui
-        const control = new OrbitControls(camera,render.domElement)
-        control.addEventListener('change',RerenderScene)
-        //  当组件卸载时，出现的动作
-        return () => {
-            control.removeEventListener('change', RerenderScene);
-        };
-    },[scene])
+    // useEffect(()=>{
+    //     //  添加到这里是因为每次我们输入input的内容时，总是会触发，整个页面的冲洗渲染，为了保持一致性，所以才会在这里添加初始化内容，这样会让每次input输入，都会激发InitialGui
+    //     const control = new OrbitControls(camera,render.domElement)
+    //     control.addEventListener('change',RerenderScene)
+    //     //  当组件卸载时，出现的动作
+    //     return () => {
+    //         control.removeEventListener('change', RerenderScene);
+    //     };
+    // },[render])
 
     function GenButtonClick(){
         // 先清空，再重新添加
@@ -506,9 +506,12 @@ const ThreeJS3DPage = () => {
         // 允许下载
         SetAvaliableDownload(true)        
         
-
         // 先置空，后添加，将canvas对象添加到对应的场景中
         containerRef.current?.appendChild(render.domElement)
+
+        //  添加轨道使得能随意拖动场景
+        const control = new OrbitControls(camera,render.domElement)
+        control.addEventListener('change',RerenderScene)
 
         RerenderScene()
     }
