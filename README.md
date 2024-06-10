@@ -17,3 +17,9 @@ npm: https://www.npmjs.com/package/mover-resizer-rotater
 this is just a simple template that I created with the `threejs` and to show a simple functions,you can click here to have a try, <a href="https://bertramye.github.io/open-source-template/three-js-3d">three-js-3d</a>
 
 
+
+# start project
+
+```bash
+$ npm run dev
+```
