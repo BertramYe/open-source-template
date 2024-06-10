@@ -1,0 +1,29 @@
+.threejsContainer {
+    position: relative;
+    outline: none;
+    margin: 0 auto;
+    margin-top: 200px;
+    border: 1px solid black;
+    background: linear-gradient(to bottom, #000000, #676767);
+}
+
+/* #container canvas{
+    background: linear-gradient(to bottom, #000000, #676767);
+} */
+
+.guiContainer {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+}
+
+
+.input_area {
+    display: block;
+    width: auto;
+    height: 20px;
+    text-align: center;
+    margin-top: 100px;
+
+}
+

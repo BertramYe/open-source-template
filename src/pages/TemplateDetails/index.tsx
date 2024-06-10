@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import MoverResizerRotaterPage from "@/pages/MoverResizerRotater";
 import NotFoundPage from "@/pages/NotFound";
 import TemplateHomePage from  '@/pages/TemplateHome'
+import ThreeJS3DPage from "../3DThreeJS";
 
 
 const TemplateDetailsPages = () => {
@@ -14,7 +15,8 @@ const TemplateDetailsPages = () => {
         const [AvaliableTemplateNamesList,] =  useState({
             'mover-resizer-rotater':<MoverResizerRotaterPage />,
             'not-found': <NotFoundPage />,
-            'template-home':< TemplateHomePage />
+            'template-home':< TemplateHomePage />,
+            'three-js-3d':< ThreeJS3DPage />,
         })  
         
         if( input_template_name && input_template_name in AvaliableTemplateNamesList){
@@ -25,7 +27,7 @@ const TemplateDetailsPages = () => {
         }
     }
     const rounterParams = useParams()
-    console.log(rounterParams)
+
     let [ title, Element] = GetTargetValidTemplate(rounterParams.template_name)
     return (
         <>

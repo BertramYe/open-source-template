@@ -1,30 +1,19 @@
-# React + TypeScript + Vite
+# simple introductions
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+this projects was built with the `React + TypeScript + Vite` to show some of the template I have developed, including some of my open source template , or some of the interesting projects
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# mover-resizer-rotater
 
-## Expanding the ESLint configuration
+this is a simple project that coded with pure javascript and css, which help you can operate the html element Box with the functions of move, resize,rotate and scale as the same time. it supports pure html and all kinds of popular frontend frameworks, like `Vue/React/NextJS/Anglar` and so on. you can try it online, just clicked here: <a herf="https://bertramye.github.io/open-source-template/mover-resizer-rotater">mover-resizer-rotater</a>
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+github：https://github.com/BertramYe/mover-resizer-rotater
+npm: https://www.npmjs.com/package/mover-resizer-rotater
 
-- Configure the top-level `parserOptions` property like this:
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+# three-js-3d
+
+this is just a simple template that I created with the `threejs` and to show a simple functions,you can click here to have a try, <a href="https://bertramye.github.io/open-source-template/three-js-3d">three-js-3d</a>
+
+
